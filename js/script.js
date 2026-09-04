@@ -168,8 +168,8 @@
             this.currentPage = pageNumber;
             
             // ===== اصلاح: تطابق با نام فایل‌های جزوه شما =====
-            // فرض می‌کنیم فایل‌ها به صورت workbook-page-1.PNG تا workbook-page-14.PNG هستند
-            this.imageElement.src = `assets/workbook-page-${pageNumber}.PNG`;
+            // فرض می‌کنیم فایل‌ها به صورت workbook-page-1.png تا workbook-page-14.PNG هستند
+            this.imageElement.src = `assets/workbook-page-${pageNumber}.png`;
             this.imageElement.alt = `صفحه ${Utils.toPersianNumber(pageNumber)} جزوه آموزشی`;
             this.infoElement.textContent = `${Utils.toPersianNumber(pageNumber)} / ${Utils.toPersianNumber(this.totalPages)}`;
         },
