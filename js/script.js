@@ -142,72 +142,70 @@
     };
 
 
-    // =========================================================
-    // ۳. مدیریت صفحات جزوه (اصلاح شده)
-    // =========================================================
+// =========================================================
+// ۳. مدیریت صفحات جزوه (اصلاح شده با پسوند png کوچک)
+// =========================================================
 
-    const WorkbookManager = {
-        totalPages: 14,
-        currentPage: 1,
-        imageElement: null,
-        infoElement: null,
+const WorkbookManager = {
+    totalPages: 14,
+    currentPage: 1,
+    imageElement: null,
+    infoElement: null,
 
-        init: function () {
-            this.imageElement = Utils.getElement('workbookImage');
-            this.infoElement = Utils.getElement('workbookPageInfo');
+    init: function () {
+        this.imageElement = Utils.getElement('workbookImage');
+        this.infoElement = Utils.getElement('workbookPageInfo');
 
-            if (!this.imageElement || !this.infoElement) return;
+        if (!this.imageElement || !this.infoElement) return;
 
-            this.showPage(1);
-            this.bindEvents();
-        },
+        this.showPage(1);
+        this.bindEvents();
+    },
 
-        showPage: function (pageNumber) {
-            if (pageNumber < 1 || pageNumber > this.totalPages) return;
+    showPage: function (pageNumber) {
+        if (pageNumber < 1 || pageNumber > this.totalPages) return;
 
-            this.currentPage = pageNumber;
-            
-            // ===== اصلاح: تطابق با نام فایل‌های جزوه شما =====
-            // فرض می‌کنیم فایل‌ها به صورت workbook-page-1.png تا workbook-page-14.PNG هستند
-            this.imageElement.src = `assets/workbook-page-${pageNumber}.png`;
-            this.imageElement.alt = `صفحه ${Utils.toPersianNumber(pageNumber)} جزوه آموزشی`;
-            this.infoElement.textContent = `${Utils.toPersianNumber(pageNumber)} / ${Utils.toPersianNumber(this.totalPages)}`;
-        },
+        this.currentPage = pageNumber;
+        
+        // ===== اصلاح: استفاده از پسوند png کوچک =====
+        this.imageElement.src = `assets/workbook-page-${pageNumber}.png`;
+        this.imageElement.alt = `صفحه ${Utils.toPersianNumber(pageNumber)} جزوه آموزشی`;
+        this.infoElement.textContent = `${Utils.toPersianNumber(pageNumber)} / ${Utils.toPersianNumber(this.totalPages)}`;
+    },
 
-        next: function () {
-            if (this.currentPage < this.totalPages) {
-                this.showPage(this.currentPage + 1);
-            }
-        },
-
-        prev: function () {
-            if (this.currentPage > 1) {
-                this.showPage(this.currentPage - 1);
-            }
-        },
-
-        bindEvents: function () {
-            document.querySelector('[data-workbook-next]')?.addEventListener('click', () => this.next());
-            document.querySelector('[data-workbook-prev]')?.addEventListener('click', () => this.prev());
-            Utils.getElement('nextWorkbookPage')?.addEventListener('click', () => this.next());
-            Utils.getElement('prevWorkbookPage')?.addEventListener('click', () => this.prev());
-
-            document.addEventListener('keydown', (event) => {
-                const activeElement = document.activeElement;
-                const isTyping = activeElement &&
-                    (activeElement.tagName === 'INPUT' ||
-                        activeElement.tagName === 'TEXTAREA' ||
-                        activeElement.isContentEditable);
-
-                if (isTyping) return;
-                if (ModalManager.isOpen()) return;
-
-                if (event.key === 'PageDown') this.next();
-                if (event.key === 'PageUp') this.prev();
-            });
+    next: function () {
+        if (this.currentPage < this.totalPages) {
+            this.showPage(this.currentPage + 1);
         }
-    };
+    },
 
+    prev: function () {
+        if (this.currentPage > 1) {
+            this.showPage(this.currentPage - 1);
+        }
+    },
+
+    bindEvents: function () {
+        document.querySelector('[data-workbook-next]')?.addEventListener('click', () => this.next());
+        document.querySelector('[data-workbook-prev]')?.addEventListener('click', () => this.prev());
+        Utils.getElement('nextWorkbookPage')?.addEventListener('click', () => this.next());
+        Utils.getElement('prevWorkbookPage')?.addEventListener('click', () => this.prev());
+
+        document.addEventListener('keydown', (event) => {
+            const activeElement = document.activeElement;
+            const isTyping = activeElement &&
+                (activeElement.tagName === 'INPUT' ||
+                    activeElement.tagName === 'TEXTAREA' ||
+                    activeElement.isContentEditable);
+
+            if (isTyping) return;
+            if (ModalManager.isOpen()) return;
+
+            if (event.key === 'PageDown') this.next();
+            if (event.key === 'PageUp') this.prev();
+        });
+    }
+};
 
     // =========================================================
     // ۴. مدیریت مودال
