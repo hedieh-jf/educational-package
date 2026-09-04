@@ -1,7 +1,7 @@
 /**
  * ============================================================
  * بسته آموزشی آشنایی با انیمیشن و ایده‌پردازی با هوش مصنوعی
- * JavaScript یکپارچه و کامل - نسخه ۲.۰
+ * JavaScript یکپارچه و کامل - نسخه ۲.۰ (اصلاح شده برای گیت‌هاب)
  * ============================================================
  */
 
@@ -37,7 +37,7 @@
 
 
     // =========================================================
-    // ۲. مدیریت اسلایدهای پاورپوینت
+    // ۲. مدیریت اسلایدهای پاورپوینت (اصلاح شده)
     // =========================================================
 
     const SlideManager = {
@@ -59,6 +59,12 @@
             this.buildDots();
             this.showSlide(0);
             this.bindEvents();
+
+            // ===== اضافه کردن توابع به window برای استفاده در onclick =====
+            window.nextSlide = () => this.next();
+            window.prevSlide = () => this.prev();
+            window.nextWorkbookPage = () => WorkbookManager.next();
+            window.prevWorkbookPage = () => WorkbookManager.prev();
         },
 
         buildDots: function () {
@@ -84,7 +90,8 @@
             this.currentSlide = (index + this.slides.length) % this.slides.length;
             const slideNumber = this.slides[this.currentSlide];
 
-            this.imageElement.src = `assets/slide${slideNumber}.png`;
+            // ===== اصلاح: تطابق با نام فایل‌های شما (Slide1.PNG تا Slide20.PNG) =====
+            this.imageElement.src = `assets/Slide${slideNumber}.PNG`;
             this.imageElement.alt = `پیش‌نمایش اسلاید ${Utils.toPersianNumber(this.currentSlide + 1)}`;
             this.countElement.textContent = `${Utils.toPersianNumber(this.currentSlide + 1)} / ${Utils.toPersianNumber(this.totalSlides)}`;
 
@@ -136,7 +143,7 @@
 
 
     // =========================================================
-    // ۳. مدیریت صفحات جزوه
+    // ۳. مدیریت صفحات جزوه (اصلاح شده)
     // =========================================================
 
     const WorkbookManager = {
@@ -159,7 +166,10 @@
             if (pageNumber < 1 || pageNumber > this.totalPages) return;
 
             this.currentPage = pageNumber;
-            this.imageElement.src = `assets/workbook-page-${pageNumber}.png`;
+            
+            // ===== اصلاح: تطابق با نام فایل‌های جزوه شما =====
+            // فرض می‌کنیم فایل‌ها به صورت workbook-page-1.PNG تا workbook-page-14.PNG هستند
+            this.imageElement.src = `assets/workbook-page-${pageNumber}.PNG`;
             this.imageElement.alt = `صفحه ${Utils.toPersianNumber(pageNumber)} جزوه آموزشی`;
             this.infoElement.textContent = `${Utils.toPersianNumber(pageNumber)} / ${Utils.toPersianNumber(this.totalPages)}`;
         },
